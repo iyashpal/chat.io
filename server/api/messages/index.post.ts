@@ -1,11 +1,11 @@
 import Messages from '~/database/messages.json'
-import {writeFileSync} from "node:fs";
+import {writeFile} from "node:fs/promises";
 import {DateTime} from "luxon";
 
 export default defineEventHandler(async (event) => {
     const body = await readBody(event)
 
-    let message = {
+    let Message = {
         id: Messages.length + 1,
         user_id: body.from,
         to_user_id: body.to,
@@ -14,8 +14,8 @@ export default defineEventHandler(async (event) => {
     }
 
     if (process.env.NODE_ENV === 'development') {
-        writeFileSync('database/messages.json', JSON.stringify([...Messages, message]))
+        await writeFile('database/messages.json', JSON.stringify([...Messages, Message]))
     }
 
-    return message
+    return Message
 })
