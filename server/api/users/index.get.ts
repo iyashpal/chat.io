@@ -1,5 +1,5 @@
-import {readFile} from "node:fs/promises";
+import Users from '@/database/users.json'
 
 export default defineEventHandler(async (event) => {
-    return await readFile('database/users.json', {encoding: 'utf8'})
+    return Users
 })
